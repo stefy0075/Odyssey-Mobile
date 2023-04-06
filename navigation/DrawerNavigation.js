@@ -6,8 +6,25 @@ const Drawer = createDrawerNavigator()
 
 export default function DrawerNavigation() {
     return (
-        <Drawer.Navigator initialRouteName="Home">
-            <Drawer.Screen name="Home" component={Home} />
-        </Drawer.Navigator>
-    )
+        <Drawer.Navigator initialRouteName="Home" screenOptions={screenOptions}>
+      <Drawer.Screen name="Odyssey" component={Home} />
+      <Drawer.Screen name="Logout" component={Home} />
+    </Drawer.Navigator>
+  )      
 }
+
+const screenOptions = {
+    headerStyle: {
+      backgroundColor: '#1C1F37'
+    },
+    headerTintColor: '#D1F366',
+    headerTitleStyle: {
+      fontWeight: 'bold', 
+      color: '#fff',
+    },
+    drawerStyle: {
+      backgroundColor: '#1C1F37',
+   },
+    drawerActiveTintColor: '#fff',
+    drawerInactiveTintColor: 'gray',         
+  }
