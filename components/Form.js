@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput } from 'react-native';
-import { CheckBox } from 'react-native-elements';
+import { View, Text, TextInput, TouchableOpacity  } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import Button from './Button';
 import styles from '../styles/SignIn.style';
 
@@ -19,28 +19,33 @@ return (
 <View style={styles.center}>
 <View style={styles.containerForm}>
   <Text style={styles.label}>Email</Text>
-  <TextInput
-     style={styles.input}
-     value={email}
-     onChangeText={setEmail}
-   />
-  <Text style={styles.label}>Password</Text>
-  <TextInput
-     style={styles.input}
-     secureTextEntry
-     value={password}
-     onChangeText={setPassword}
-   />   
-   <CheckBox
-      title={'Show password'}
-      style={styles.checkBox}
-      checked={showPassword}
-      onPress={() => setShowPassword(!showPassword)}
+    <TextInput
+      style={styles.input}
+      value={email}
+      onChangeText={setEmail}
     />
+    <Text style={styles.label}>Password</Text>
+    <View style={styles.inputContainer}>
+    <TextInput
+      style={styles.inputPassword}
+      secureTextEntry={!showPassword}
+      value={password}
+      onChangeText={setPassword}
+/>
+<TouchableOpacity 
+      onPress={() => setShowPassword(!showPassword)}
+      style={styles.iconContainer}>
+      {showPassword ? (
+        <Ionicons name="eye-off" size={24} color="white" />
+      ) : (
+        <Ionicons name="eye" size={24} color="white" />
+      )}
+    </TouchableOpacity>
+  </View>
 </View>
-<View style={styles.innerView}>
-    <Button title="Sign In" onPress={handleSignIn}/>
-</View>
+  <View style={styles.innerView}>
+      <Button title="Sign In" onPress={handleSignIn}/>
+  </View>
 </View>
 );
 };

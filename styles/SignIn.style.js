@@ -49,12 +49,24 @@ const center = {
     alignItems: 'center',
 }
 
-const checkBox = {
-    backgroundColor: '#1B1D2A',
+const inputContainer = {
+    flexDirection: 'row',
+    alignItems: 'center',
     borderRadius: 17,
+    paddingHorizontal: 10,
+    marginBottom: 10,
+    backgroundColor: '#1C1F37',
 }
 
+const inputPassword = {
+    flex: 1,
+    height: 45,
+    color: '#fff',
+  }
   
+const iconContainer = {
+    padding: 10,
+  }
 
 export default {
   background,
@@ -64,7 +76,9 @@ export default {
   label,
   innerView,
   center,
-  checkBox
+  inputPassword,
+  iconContainer,
+  inputContainer
 };
 
   
