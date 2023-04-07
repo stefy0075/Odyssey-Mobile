@@ -1,8 +1,9 @@
 const button = {
       alignItems: 'center',
+      justifyContent: 'center',
       backgroundColor: '#D1F366',
-      padding: 10,
-      marginTop: 30,
+      minHeight: 50,
+      minWidth: 130,
       borderRadius: 50,
     }
 

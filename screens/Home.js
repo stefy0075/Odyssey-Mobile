@@ -8,11 +8,8 @@ export default class Home extends Component {
     return (
       <ImageBackground source={styles.backgroundHome.backgroundImage} style={styles.backgroundHome}>
       <View style={styles.container}>
-
         <Text style={styles.text}>I'm a traveler and I want to find the best deals to travel</Text>
-
         <Button title="More" onPress={() => console.log('Presionaste el botón')}/>
-
       </View>
       </ImageBackground>
     );

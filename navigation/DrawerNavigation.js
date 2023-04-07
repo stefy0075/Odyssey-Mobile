@@ -1,6 +1,7 @@
 import React from "react"
 import { createDrawerNavigator } from "@react-navigation/drawer"
 import Home from "../screens/Home"
+import SignIn from "../screens/SignIn"
 
 const Drawer = createDrawerNavigator()
 
@@ -8,7 +9,8 @@ export default function DrawerNavigation() {
     return (
         <Drawer.Navigator initialRouteName="Home" screenOptions={screenOptions}>
       <Drawer.Screen name="Odyssey" component={Home} />
-      <Drawer.Screen name="Logout" component={Home} />
+      <Drawer.Screen name="Sign In" component={SignIn} />
+      <Drawer.Screen name="Register" component={Home} />
     </Drawer.Navigator>
   )      
 }
