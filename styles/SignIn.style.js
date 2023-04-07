@@ -1,6 +1,5 @@
 const background = {
-    backgroundImage: require('../assets/home_slider.6.png'),
-    backgroundSize: 'contain',
+    backgroundImage: require('../assets/home_slider.2.png'),
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
@@ -11,7 +10,7 @@ const container = {
     height: 550,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#1B1D2A',
+    backgroundColor: '#282B43',
     borderRadius: 17,
 }
 

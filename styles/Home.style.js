@@ -1,5 +1,5 @@
 const backgroundHome = {
-    backgroundImage: require('../assets/home_slider.6.png'),
+    backgroundImage: require('../assets/HeroBg.jpg'),
     backgroundSize: 'contain',
     flex: 1,
     justifyContent: 'center',

@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { View, ImageBackground } from "react-native";
-import styles from "../styles/SignIn.style.js";
-import Form from "../components/SignInForm.js";
+import styles from "../styles/SignUp.style.js";
+import SignUpForm from "../components/SignUpForm.js";
 
-export default class SignIn extends Component {
+export default class SignUp extends Component {
   render() {
     return (
       <ImageBackground
@@ -12,7 +12,7 @@ export default class SignIn extends Component {
         resizeMode="cover"
       >
         <View style={styles.container}>
-          <Form />
+          <SignUpForm/>
         </View>
       </ImageBackground>
     );
