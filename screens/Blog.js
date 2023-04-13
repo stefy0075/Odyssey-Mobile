@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { View, ImageBackground, Text, ScrollView} from "react-native";
-import styles from "../styles/FAQs.style.js";
-import FAQs from "../components/FAQs.js";
+import styles from "../styles/Blog.style.js";
+import CardBlog from "../components/CardBlog.js";
 
 export default class FAQS extends Component {
   render() {
@@ -14,10 +14,10 @@ export default class FAQS extends Component {
       >
         <ScrollView>
         <Text style={styles.title}>
-        What can we help you?
+        Travel without limits and make your dreams come true.
         </Text>
         <ScrollView style={styles.container}>
-          <FAQs />
+          <CardBlog />
         </ScrollView>
       </ScrollView>
       </ImageBackground>

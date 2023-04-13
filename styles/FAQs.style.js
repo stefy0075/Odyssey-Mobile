@@ -7,8 +7,6 @@ const background = {
 
 const container = {
   width: 400,
-  height: 1400,
-  alignItems: "center",
   backgroundColor: "#141627",
   borderRadius: 17,
   marginTop: 100,

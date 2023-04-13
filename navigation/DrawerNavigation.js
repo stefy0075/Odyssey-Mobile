@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { createDrawerNavigator, DrawerItem } from "@react-navigation/drawer";
-import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import Header from "../components/Header";
 import Home from "../screens/Home";
 import SignIn from "../screens/SignIn";
 import SignUp from "../screens/SignUp";
 import FAQs from "../screens/FAQs";
-import Header from "../components/Header";
-import { Ionicons } from "@expo/vector-icons";
 import CartScreen from "../screens/CartScreen";
 import DestinatiosScreen from "../screens/Destinations";
+import Blog from "../screens/Blog";
 
 const Drawer = createDrawerNavigator();
 
@@ -39,6 +40,7 @@ export default function DrawerNavigation() {
       <Drawer.Screen name="Sign In" component={SignIn} />
       <Drawer.Screen name="Sign Up" component={SignUp} />
       <Drawer.Screen name='Cart' component={CartScreen} />
+      <Drawer.Screen name='Blog' component={Blog} />
     </Drawer.Navigator>
   );
 }
@@ -109,6 +111,13 @@ function CustomDrawerContent(props) {
           inactiveTintColor="#ffffff"
           labelStyle={styles.drawerLabel}
           icon={() => <Ionicons name="cart" size={24} color="#D1F366" />}
+        />
+        <DrawerItem
+          label="Blog"
+          onPress={() => props.navigation.navigate("Blog")}
+          inactiveTintColor="#ffffff"
+          labelStyle={styles.drawerLabel}
+          icon={() => <Ionicons name="book" size={24} color="#D1F366" />}
         />
         <DrawerItem
           label="FAQ's"

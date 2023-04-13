@@ -2,8 +2,8 @@ const button = {
   alignItems: "center",
   justifyContent: "center",
   backgroundColor: "#D1F366",
-  minHeight: 50,
-  minWidth: 130,
+  minHeight: 40,
+  minWidth: 100,
   borderRadius: 7,
 };
 
