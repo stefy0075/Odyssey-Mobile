@@ -6,6 +6,7 @@ import SignIn from "../screens/SignIn";
 import SignUp from "../screens/SignUp";
 import Header from "../components/Header";
 import { Ionicons } from "@expo/vector-icons";
+import CartScreen from "../screens/CartScreen";
 
 const Drawer = createDrawerNavigator();
 
@@ -33,6 +34,7 @@ export default function DrawerNavigation() {
       />
       <Drawer.Screen name="Sign In" component={SignIn} />
       <Drawer.Screen name="Sign Up" component={SignUp} />
+      <Drawer.Screen name='Cart' component={CartScreen} />
     </Drawer.Navigator>
   );
 }
@@ -89,6 +91,13 @@ function CustomDrawerContent(props) {
           inactiveTintColor="#ffffff"
           labelStyle={styles.drawerLabel}
           icon={() => <Ionicons name="person-add" size={24} color="#D1F366" />}
+        />
+        <DrawerItem
+          label="Cart"
+          onPress={() => props.navigation.navigate("Cart")}
+          inactiveTintColor="#ffffff"
+          labelStyle={styles.drawerLabel}
+          icon={() => <Ionicons name="cart" size={24} color="#D1F366" />}
         />
         <DrawerItem
           label={`Mode ${!isDarkMode ? "Dark" : "Ligth"}`}
