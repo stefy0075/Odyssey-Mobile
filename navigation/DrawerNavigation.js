@@ -4,6 +4,7 @@ import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
 import Home from "../screens/Home";
 import SignIn from "../screens/SignIn";
 import SignUp from "../screens/SignUp";
+import FAQs from "../screens/FAQs";
 import Header from "../components/Header";
 import { Ionicons } from "@expo/vector-icons";
 import CartScreen from "../screens/CartScreen";
@@ -18,7 +19,7 @@ export default function DrawerNavigation() {
   };
 
   return (
-    
+
     <Drawer.Navigator
       initialRouteName="Home"
       screenOptions={screenOptions}
@@ -32,6 +33,8 @@ export default function DrawerNavigation() {
           headerTitleAlign: "center",
         }}
       />
+      <Drawer.Screen name="Destinations" component={SignUp} />
+      <Drawer.Screen name="FAQ's" component={FAQs} />
       <Drawer.Screen name="Sign In" component={SignIn} />
       <Drawer.Screen name="Sign Up" component={SignUp} />
       <Drawer.Screen name='Cart' component={CartScreen} />
@@ -41,7 +44,7 @@ export default function DrawerNavigation() {
 
 const screenOptions = {
   headerStyle: {
-    backgroundColor: "#1C1F37",
+    backgroundColor: "#141627",
   },
   headerTintColor: "#D1F366",
   headerTitleStyle: {
@@ -49,7 +52,7 @@ const screenOptions = {
     color: "#fff",
   },
   drawerStyle: {
-    backgroundColor: "#1C1F37",
+    backgroundColor: "#141627",
     width: "70%",
   },
   drawerActiveTintColor: "#fff",
@@ -79,6 +82,13 @@ function CustomDrawerContent(props) {
           icon={() => <Ionicons name="home" size={24} color="#D1F366" />}
         />
         <DrawerItem
+          label="Destinations"
+          onPress={() => props.navigation.navigate("Destinations")}
+          inactiveTintColor="#ffffff"
+          labelStyle={styles.drawerLabel}
+          icon={() => <Ionicons name="airplane" size={24} color="#D1F366" />}
+        />
+        <DrawerItem
           label="Sign In"
           onPress={() => props.navigation.navigate("Sign In")}
           inactiveTintColor="#ffffff"
@@ -98,6 +108,13 @@ function CustomDrawerContent(props) {
           inactiveTintColor="#ffffff"
           labelStyle={styles.drawerLabel}
           icon={() => <Ionicons name="cart" size={24} color="#D1F366" />}
+        />
+        <DrawerItem
+          label="FAQ's"
+          onPress={() => props.navigation.navigate("FAQ's")}
+          inactiveTintColor="#ffffff"
+          labelStyle={styles.drawerLabel}
+          icon={() => <Ionicons name="help-circle" size={24} color="#D1F366" />}
         />
         <DrawerItem
           label={`Mode ${!isDarkMode ? "Dark" : "Ligth"}`}

@@ -1,4 +1,6 @@
 const containerGeneral = {
+  borderTopWidth: 1,
+  borderTopColor: "grey",
   flexDirection: "column",
   alignItems: "center",
   justifyContent: "center",

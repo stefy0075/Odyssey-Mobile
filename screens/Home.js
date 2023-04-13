@@ -46,7 +46,7 @@ export default function Home() {
                 <View style={styles.line}>
                     <GradientBackground
                         startColor={"#0D7C74"}
-                        endColor={"#1C1F37"}
+                        endColor={"#141627"}
                         style={styles.gradient}
                     />
                 </View>
@@ -83,7 +83,7 @@ export default function Home() {
             </ScrollView>
             <View style={styles.line2}>
                 <GradientBackground
-                    startColor={"#1C1F37"}
+                    startColor={"#141627"}
                     endColor={"#084E49"}
                     style={styles.gradient}
                 />
@@ -91,11 +91,14 @@ export default function Home() {
             <View style={styles.line3}>
                 <GradientBackground
                     startColor={"#084E49"}
-                    endColor={"#1C1F37"}
+                    endColor={"#141627"}
                     style={styles.gradient}
                 />
             </View>
             <ScrollView style={styles.section}>
+                <View style={styles.section3}>
+
+                </View>
                 <View style={styles.section3}>
                     <Text style={styles.titleSection3}>Don't miss anyone promotion</Text>
                     <Image
