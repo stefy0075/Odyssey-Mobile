@@ -1,13 +1,13 @@
-import React from 'react'
-import { View, Text } from 'react-native'
-import Cart from '../components/Cart'
+import React, { Component } from "react";
+import { View } from "react-native";
+import Cart from "../components/Cart";
 
-function CartScreen() {
+export default class CartScreen extends Component {
+  render() {
     return (
-        <View>
-            <Cart />
-        </View>
-    )
+      <View>
+        <Cart />
+      </View>
+    );
+  }
 }
-
-export default CartScreen

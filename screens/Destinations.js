@@ -1,13 +1,13 @@
-import React from 'react'
+import React, { Component } from "react";
 import { View, Text } from 'react-native'
 import Destinations from '../components/Destinations'
 
-function DestinatiosScreen() {
-    return (
-        <View>
-            <Destinations />
-        </View>
-    )
+export default class DestinatiosScreen extends Component {
+    render(){
+        return (
+            <View>
+                <Destinations />
+            </View>
+        )
+    }
 }
-
-export default DestinatiosScreen
