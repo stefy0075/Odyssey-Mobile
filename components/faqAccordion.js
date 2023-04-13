@@ -38,7 +38,7 @@ export default class FaqAccordion extends Component {
   renderAccordians = () => {
     const items = [];
     for (item of this.state.menu) {
-      items.push(<Accordian title={item.title} data={item.data} />);
+      items.push(<Accordian key={item.title} title={item.title} data={item.data} />);
     }
     return items;
   };

@@ -28,7 +28,7 @@ const Form = ({ onSignIn }) => {
 
       const token = res.data.token;
       console.log(token);
-      await AsyncStorage.setItem("token", JSON.stringify(token));
+      await AsyncStorage.setItem("token", token);
 
       Alert.alert("¡Usuario Online!", "Bienvenido", [
         { text: "OK", onPress: () => console.log("OK Pressed") },

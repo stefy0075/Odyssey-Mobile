@@ -7,6 +7,8 @@ import SignUp from "../screens/SignUp";
 import FAQs from "../screens/FAQs";
 import Header from "../components/Header";
 import { Ionicons } from "@expo/vector-icons";
+import CartScreen from "../screens/CartScreen";
+import DestinatiosScreen from "../screens/Destinations";
 
 const Drawer = createDrawerNavigator();
 
@@ -18,7 +20,7 @@ export default function DrawerNavigation() {
   };
 
   return (
-    
+
     <Drawer.Navigator
       initialRouteName="Home"
       screenOptions={screenOptions}
@@ -32,10 +34,11 @@ export default function DrawerNavigation() {
           headerTitleAlign: "center",
         }}
       />
-      <Drawer.Screen name="Destinations" component={SignUp} />
+      <Drawer.Screen name="Destinations" component={DestinatiosScreen} />
       <Drawer.Screen name="FAQ's" component={FAQs} />
       <Drawer.Screen name="Sign In" component={SignIn} />
       <Drawer.Screen name="Sign Up" component={SignUp} />
+      <Drawer.Screen name='Cart' component={CartScreen} />
     </Drawer.Navigator>
   );
 }
@@ -99,6 +102,13 @@ function CustomDrawerContent(props) {
           inactiveTintColor="#ffffff"
           labelStyle={styles.drawerLabel}
           icon={() => <Ionicons name="person-add" size={24} color="#D1F366" />}
+        />
+        <DrawerItem
+          label="Cart"
+          onPress={() => props.navigation.navigate("Cart")}
+          inactiveTintColor="#ffffff"
+          labelStyle={styles.drawerLabel}
+          icon={() => <Ionicons name="cart" size={24} color="#D1F366" />}
         />
         <DrawerItem
           label="FAQ's"
