@@ -7,8 +7,7 @@ const background = {
 
 const container = {
   width: 400,
-  height: 2000,
-  // justifyContent: "center",
+  height: 1400,
   alignItems: "center",
   backgroundColor: "#141627",
   borderRadius: 17,
@@ -43,8 +42,8 @@ const title2 = {
 };
 
 const containerForm = {
-  width: 280,
-  height: 250,
+  height: 400,
+  width: 320,
   justifyContent: "center",
 };
 
@@ -52,6 +51,16 @@ const input = {
   width: "100%",
   borderRadius: 17,
   height: 45,
+  color: "#fff",
+  backgroundColor: "#1C1F37",
+  paddingHorizontal: 10,
+  marginBottom: 20,
+};
+
+const input2 = {
+  width: "100%",
+  borderRadius: 17,
+  height: 150,
   color: "#fff",
   backgroundColor: "#1C1F37",
   paddingHorizontal: 10,
@@ -75,38 +84,24 @@ const center = {
   justifyContent: "center",
   alignItems: "center",
 };
-
-const inputContainer = {
-  flexDirection: "row",
+const containerGeneralForm = {
+  justifyContent: "center",
   alignItems: "center",
-  borderRadius: 17,
-  paddingHorizontal: 10,
-  marginBottom: 10,
-  backgroundColor: "#1C1F37",
-};
-
-const inputPassword = {
-  flex: 1,
-  height: 45,
-  color: "#fff",
-};
-
-const iconContainer = {
-  padding: 10,
+  height: 650,
+  width: 370,
 };
 
 export default {
   background,
   container,
-  // center,
+  center,
   title,
   title2,
   text,
   containerForm,
-  // input,
-  // inputPassword,
-  // iconContainer,
-  // inputContainer,
-  // innerView,
-  // label
+  containerGeneralForm,
+  input,
+  innerView,
+  label,
+  input2,
 };

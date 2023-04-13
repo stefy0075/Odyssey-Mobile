@@ -4,7 +4,7 @@ import { View, Text, TextInput, TouchableOpacity } from "react-native";
 // import Button from "./Button";
 import styles from "../styles/FAQs.style.js";
 import FaqAccordion from "./faqAccordion";
-// import FaqsForm from './FaqsForm.js'
+import Form from "./FaqsForm.js";
 
 const FAQs = () => {
   return (
@@ -14,7 +14,7 @@ const FAQs = () => {
       </View>
       <FaqAccordion />
       <View>
-          {/* <FaqsForm/> */}
+        <Form />
       </View>
     </View>
   );
