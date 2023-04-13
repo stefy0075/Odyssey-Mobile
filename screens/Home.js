@@ -12,10 +12,26 @@ import styles from "../styles/Home.style.js";
 import Button from "../components/Button.js";
 import GradientBackground from "../components/Gradient.js";
 import Footer from "../components/Footer.js";
+import { useNavigation } from '@react-navigation/native';
 
 export default function Home() {
+    const navigation = useNavigation();
     const scrollViewRef = useRef();
     const { height } = Dimensions.get("window");
+
+    const handleMorePromotions = () => {
+        navigation.navigate("FAQ's");
+      };
+
+      const handleTouristActivities = () => {
+        navigation.navigate("Blog");
+      };
+
+      const handleDiscoverCities = () => {
+        navigation.navigate("Destinations");
+      };
+
+      
 
     return (
         <ScrollView contentContainerStyle={styles.scrollView} ref={scrollViewRef}>
@@ -109,7 +125,7 @@ export default function Home() {
                         You can cancel your purchases* made online or by phone within a
                         maximum period of 10 days from the date you made the purchase
                     </Text>
-                    <Button title="More" />
+                    <Button title="More" onPress={handleMorePromotions}/>
                 </View>
 
                 <View style={styles.section3}>
@@ -124,7 +140,7 @@ export default function Home() {
                         can enjoy the main tourist attractions of your next destination to
                         the fullest.
                     </Text>
-                    <Button title="More" />
+                    <Button title="More" onPress={handleTouristActivities}/>
                 </View>
 
                 <View style={styles.section3}>
@@ -142,7 +158,7 @@ export default function Home() {
                         financing options. If you are looking for travel insurance for
                         Europe, America, Asia or any destination
                     </Text>
-                    <Button title="More" />
+                    <Button title="More" onPress={handleDiscoverCities}/>
                 </View>
             </ScrollView>
             <Footer />
