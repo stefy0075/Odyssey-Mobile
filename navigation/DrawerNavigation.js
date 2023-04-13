@@ -8,6 +8,7 @@ import FAQs from "../screens/FAQs";
 import Header from "../components/Header";
 import { Ionicons } from "@expo/vector-icons";
 import CartScreen from "../screens/CartScreen";
+import DestinatiosScreen from "../screens/Destinations";
 
 const Drawer = createDrawerNavigator();
 
@@ -33,7 +34,7 @@ export default function DrawerNavigation() {
           headerTitleAlign: "center",
         }}
       />
-      <Drawer.Screen name="Destinations" component={SignUp} />
+      <Drawer.Screen name="Destinations" component={DestinatiosScreen} />
       <Drawer.Screen name="FAQ's" component={FAQs} />
       <Drawer.Screen name="Sign In" component={SignIn} />
       <Drawer.Screen name="Sign Up" component={SignUp} />
