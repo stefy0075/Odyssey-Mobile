@@ -5,8 +5,8 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 export default function PacketCard(props) {
     const navigation = useNavigation();
 
-    function handleRead() {
-        navigation.navigate('Details', { packets: props })
+    function handleDetail() {
+        navigation.navigate('Hola', { packet: props })
     }
 
     return (
@@ -18,7 +18,7 @@ export default function PacketCard(props) {
                     <Text style={styles.title}>{props.title_}</Text>
                     <Text style={styles.category}>{props.category_.name}</Text>
                     <View style={styles.date}>
-                        <TouchableOpacity style={styles.btnCont} onPress={handleRead}>
+                        <TouchableOpacity style={styles.btnCont} onPress={handleDetail}>
                             <View>
                                 <Text style={styles.btnTexto}>Detail</Text>
                             </View>

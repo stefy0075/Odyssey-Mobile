@@ -24,7 +24,7 @@ function Destinations() {
                 {packets.length ? (
                 packets.map((packet) => <PacketCard key={packet._id} title_={packet.title} category_={packet.category_id} photo={packet.cover_photo} _id={packet._id} packages={packet.packages} />)
                 ) : (
-                <Text style={{ textAlign: 'center', marginTop: 20 }}>Not Found</Text>
+                <Text style={{ textAlign: 'center', marginTop: 20, color: '#fff' }}>Not Found</Text>
                 )}
             </View>
         </ScrollView>
