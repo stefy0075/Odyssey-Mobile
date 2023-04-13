@@ -8,7 +8,7 @@ const scrollView = {
 
 const section = {
   flex: 1,
-  backgroundColor: "#1C1F37",
+  backgroundColor: "#141627",
 };
 
 const anchor = {
@@ -75,7 +75,9 @@ const image = {
   width: 200,
   resizeMode: "cover",
   borderRadius: 17,
-  margin: 20,
+  marginBottom: 40,
+  marginLeft:10,
+  marginRight: 10,
 };
 
 const titleSection3 = {

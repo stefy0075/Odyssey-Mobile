@@ -10,7 +10,7 @@ const container = {
   height: 600,
   justifyContent: "center",
   alignItems: "center",
-  backgroundColor: "#282B43",
+  backgroundColor: "#141627",
   borderRadius: 17,
 };
 

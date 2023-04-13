@@ -1,17 +1,45 @@
 const background = {
-  backgroundImage: require("../assets/home_slider.2.png"),
+  backgroundImage: require("../assets/FaqsBg.jpg"),
   flex: 1,
   justifyContent: "center",
   alignItems: "center",
 };
 
 const container = {
-  width: 350,
-  height: 550,
-  justifyContent: "center",
+  width: 400,
+  height: 2000,
+  // justifyContent: "center",
   alignItems: "center",
   backgroundColor: "#141627",
   borderRadius: 17,
+  marginTop: 100,
+  marginBottom: 250,
+};
+
+const title = {
+  color: "white",
+  fontSize: 50,
+  fontWeight: "bold",
+  marginTop: 300,
+  marginBottom: 250,
+  lineHeight: 80,
+  letterSpacing: 1.7,
+  textAlign: "center",
+};
+
+const text = {
+  color: "white",
+  fontSize: 30,
+  fontWeight: "bold",
+  marginTop: 20,
+  lineHeight: 50,
+  letterSpacing: 0.9,
+  textAlign: "center",
+  marginBottom: 20,
+};
+
+const title2 = {
+  margin: 30,
 };
 
 const containerForm = {
@@ -69,13 +97,16 @@ const iconContainer = {
 
 export default {
   background,
-  containerForm,
   container,
-  input,
-  label,
-  innerView,
-  center,
-  inputPassword,
-  iconContainer,
-  inputContainer,
+  // center,
+  title,
+  title2,
+  text,
+  containerForm,
+  // input,
+  // inputPassword,
+  // iconContainer,
+  // inputContainer,
+  // innerView,
+  // label
 };
