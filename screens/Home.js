@@ -113,9 +113,6 @@ export default function Home() {
             </View>
             <ScrollView style={styles.section}>
                 <View style={styles.section3}>
-
-                </View>
-                <View style={styles.section3}>
                     <Text style={styles.titleSection3}>Don't miss anyone promotion</Text>
                     <Image
                         source={require("../assets/celular.png")}
