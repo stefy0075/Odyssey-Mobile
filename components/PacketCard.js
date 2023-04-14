@@ -6,12 +6,11 @@ export default function PacketCard(props) {
     const navigation = useNavigation();
 
     function handleDetail() {
-        navigation.navigate('Hola', { packet: props })
+        navigation.navigate('Detail', { packet: props })
     }
 
     return (
         <View style={styles.cardContainer}>
-            {/* <View style={[styles.spanCard, { backgroundColor: props.category_.name.includes('shonen') ? 'red' : props.category_.name.includes('comic') ? 'orange' : props.category_.name.includes('shojo') ? 'green' : props.category_.name.includes('seinen') ? 'purple' : '' }]}></View> */}
             <View style={styles.infoContainer}>
                 <Image style={styles.img} source={{ uri: props.photo }} />
                 <View style={styles.contText}>

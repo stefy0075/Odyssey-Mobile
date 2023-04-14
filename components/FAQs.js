@@ -10,7 +10,7 @@ const FAQs = () => {
   return (
     <View style={styles.center}>
       <View style={styles.title2}>
-        <Text style={styles.text}>More Frecuent Questions</Text>
+        <Text style={styles.text}>More Frequent Questions</Text>
       </View>
       <FaqAccordion />
       <View>
