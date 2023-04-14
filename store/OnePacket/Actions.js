@@ -13,7 +13,6 @@ const read_One = createAsyncThunk(
         const url = (`https://odyssey-back.onrender.com/destinos/${id}`)
         try {
             const response = await axios.get(url, config);
-            console.log(response.data.destino)
             return {
                 packets: response.data.destino
             };

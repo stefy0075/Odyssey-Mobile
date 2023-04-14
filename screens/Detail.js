@@ -4,7 +4,7 @@ import Detail from '../components/Detail'
 import { useRoute } from '@react-navigation/core';
 
 
-function Hola() {
+function DetailScreen() {
     const route = useRoute();
     const { packet } = route.params;
     const id = packet._id
@@ -16,4 +16,4 @@ function Hola() {
     )
 }
 
-export default Hola
+export default DetailScreen

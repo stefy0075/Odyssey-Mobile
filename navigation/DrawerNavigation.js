@@ -10,7 +10,7 @@ import FAQs from "../screens/FAQs";
 import CartScreen from "../screens/CartScreen";
 import DestinatiosScreen from "../screens/Destinations";
 import Blog from "../screens/Blog";
-import Hola from "../screens/Hola";
+import DetailScreen from "../screens/Detail";
 
 
 const Drawer = createDrawerNavigator();
@@ -38,7 +38,7 @@ export default function DrawerNavigation() {
         }}
       />
       <Drawer.Screen name="Destinations" component={DestinatiosScreen} />
-      <Drawer.Screen name="Hola" component={Hola} />
+      <Drawer.Screen name="Detail" component={DetailScreen} />
       <Drawer.Screen name="FAQ's" component={FAQs} />
       <Drawer.Screen name="Sign In" component={SignIn} />
       <Drawer.Screen name="Sign Up" component={SignUp} />
