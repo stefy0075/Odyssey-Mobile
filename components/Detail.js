@@ -26,17 +26,19 @@ function Detail(props) {
 
     return (
         <ScrollView style={styles.cont}>
-            <Image style={styles.img} source={{ uri: packets.cover_photo }} />
-            <Text style={styles.title}>{packets.title}</Text>
-            <Text style={styles.subtitle}> {packets.country} | {packets.continent} </Text>
-            <View style={styles.description}>
-                <Text style={styles.text}>{packets.description}</Text>
+            <View style={styles.cont2}>
+                <Image style={styles.img} source={{ uri: packets.cover_photo }} />
+                <Text style={styles.title}>{packets.title}</Text>
+                <Text style={styles.subtitle}> {packets.country} | {packets.continent} </Text>
+                <View style={styles.description}>
+                    <Text style={styles.text}>{packets.description}</Text>
+                </View>
+                <View style={styles.textType}>
+                    {packets.packages?.map((pakage, index) => (
+                        <Text key={index} style={styles.text2}>{pakage.type}</Text>
+                    ))}
+                </View>
             </View>
-            <Text style={styles.subtitle}> {packets.packages[0].type} | {packets.packages[1].type} | {packets.packages[2].type}</Text>
-            <Text style={styles.subtitle}> {packets.packages[0].time[0].
-                start_date} || {packets.packages[0].time[0].
-                    finish_date}
-            </Text>
         </ScrollView>
     )
 }
@@ -45,6 +47,9 @@ const styles = StyleSheet.create({
     cont: {
         backgroundColor: '#141627',
         height: 820,
+    },
+    cont2:{
+        marginTop: 30
     },
     img: {
         justifyContent: 'center',
@@ -80,7 +85,21 @@ const styles = StyleSheet.create({
         fontSize: 15,
         lineHeight: 22,
         color: '#fff'
-    }
+    },
+    textType: {
+        marginTop: 10,
+        display: 'flex',
+        gap: 10,
+        flexDirection: 'row',
+        width: '100%',
+        justifyContent: 'center'
+    },
+    text2: {
+        fontSize: 15,
+        lineHeight: 22,
+        color: '#fff',
+        margin: 10
+    },
 })
 
 export default Detail
