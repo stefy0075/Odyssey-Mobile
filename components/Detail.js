@@ -46,10 +46,11 @@ function Detail(props) {
 const styles = StyleSheet.create({
     cont: {
         backgroundColor: '#141627',
-        height: 820,
+        height: '100%',
     },
-    cont2:{
-        marginTop: 30
+    cont2: {
+        marginTop: 30,
+        height: '100%',
     },
     img: {
         justifyContent: 'center',
