@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, StyleSheet, TextInput } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { useFocusEffect } from '@react-navigation/native';
 import PacketsActions from '../store/Packets/actions';
@@ -10,23 +10,32 @@ const { read_all } = PacketsActions;
 function Destinations() {
     const dispatch = useDispatch();
     const [reload, setReload] = useState(false);
+    const [searchTerm, setSearchTerm] = useState(''); // Estado para almacenar la cadena de búsqueda
 
     const packets = useSelector((store) => store.packets.packets);
-    
+
     useFocusEffect(
         useCallback(() => {
             dispatch(read_all());
         }, [dispatch, reload])
     );
 
+    // Función para filtrar los paquetes según la cadena de búsqueda
+    const filteredPackets = packets.filter(packet => packet.title.toLowerCase().includes(searchTerm.toLowerCase()));
+
     return (
         <ScrollView>
             <View style={styles.cont}>
-                <Text style={styles.filter}>
-                    Acá deberia estar al menos un filtro
-                </Text>
-                {packets.length ? (
-                    packets.map((packet) => <PacketCard key={packet._id} title_={packet.title} category_={packet.category_id} photo={packet.cover_photo} _id={packet._id} packages={packet.packages} />)
+                <View style={styles.filter}>
+                    <TextInput
+                        style={styles.inputSearch}
+                        placeholder="Search"
+                        value={searchTerm}
+                        onChangeText={setSearchTerm}
+                    />
+                </View>
+                {filteredPackets.length ? (
+                    filteredPackets.map((packet) => <PacketCard key={packet._id} title_={packet.title} category_={packet.category_id} photo={packet.cover_photo} _id={packet._id} packages={packet.packages} />)
                 ) : (
                     <Text style={{ textAlign: 'center', marginTop: 20, color: '#fff' }}>Not Found</Text>
                 )}
@@ -39,9 +48,27 @@ const styles = StyleSheet.create({
     cont: {
         backgroundColor: '#141627',
     },
+    inputSearch: {
+        flex: 1,
+        height: 40,
+        backgroundColor: "rgba(228, 228, 228, 0.5)",
+        borderRadius: 40,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        paddingHorizontal: 10,
+        marginBottom: 20,
+        width: '85%',
+    },
     filter: {
-        fontSize: 22,
-        color: "#fff"
+        display: 'flex',
+        alignItems: "center",
+        alignSelf: "center",
+        justifyContent: "center",
+        width: '100%',
+        margin: 8
     }
+
+
 })
 export default Destinations;
