@@ -1,8 +1,10 @@
 import React from 'react'
-import { ScrollView, View, Text, Image, StyleSheet } from 'react-native'
+import { ScrollView, View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import onePacket from '../store/OnePacket/Actions'
+import cart from '../assets/cart.png'
 
 const { read_One } = onePacket
 
@@ -11,6 +13,7 @@ function Detail(props) {
     const id = props._id
     console.log(id)
     const [packets, setPackets] = useState([])
+    let target = []
 
     useEffect(() => {
         dispatch(read_One(id))
@@ -23,6 +26,45 @@ function Detail(props) {
             });
     }, [id]);
 
+    async function handleCart(pakage) {
+        const stock = pakage.stock;
+        if (pakage.price === 'Not Available' || stock === 'Not Available' || stock === 0) {
+            // El paquete no se puede agregar al carrito
+            console.log('Este paquete no está disponible');
+            return;
+        }
+        try {
+            const paqueteString = await AsyncStorage.getItem('paquete');
+            let paquete = JSON.parse(paqueteString);
+
+            if (!paquete) {
+                paquete = [];
+            }
+
+            const existingPackageIndex = paquete.findIndex((item) => item.type === pakage.type && item.title === packets.title);
+
+            if (existingPackageIndex !== -1) {
+                // Si el paquete ya existe en el carrito, aumenta la cantidad
+                paquete[existingPackageIndex].quantity += 1;
+            } else {
+                // Si el paquete no existe en el carrito, crea una nueva entrada
+                paquete.push({
+                    ...pakage,
+                    title: packets.title,
+                    cover_photo: packets.cover_photo,
+                    quantity: 1,
+                });
+            }
+
+            await AsyncStorage.setItem('paquete', JSON.stringify(paquete));
+            console.log('Paquete guardado en AsyncStorage');
+        } catch (error) {
+            console.log('Error al guardar el paquete: ', error);
+        }
+    }
+
+
+
 
     return (
         <ScrollView style={styles.cont}>
@@ -33,15 +75,68 @@ function Detail(props) {
                 <View style={styles.description}>
                     <Text style={styles.text}>{packets.description}</Text>
                 </View>
-                <View style={styles.textType}>
-                    {packets.packages?.map((pakage, index) => (
-                        <Text key={index} style={styles.text2}>{pakage.type}</Text>
-                    ))}
+                <View>
+                    <View style={styles.cardType}>
+                        {packets.packages?.map((pakage, index) => (
+                            pakage.type === "Plane" ? (
+                                <View key={index} style={styles.cardInd}>
+                                    <View>
+                                        <Text style={styles.textType2}>Transport: {pakage.type}</Text>
+                                        <Text style={styles.textStock}>Stock: {pakage.stock}</Text>
+                                        <Text style={styles.textStock}>Start: {pakage.time[0].start_date}</Text>
+                                        <Text style={styles.textStock}>Finish: {pakage.time[0].finish_date}</Text>
+                                        <Text style={styles.textStock}>Price: ${pakage.price}</Text>
+                                    </View>
+                                    <TouchableOpacity style={styles.btnCont} onPress={() => handleCart(pakage)}
+                                    >
+                                        <Image source={cart} style={styles.btnCart} />
+                                    </TouchableOpacity>
+                                </View>
+                            ) : null
+                        ))}
+                    </View>
+                    <View style={styles.cardType}>
+                        {packets.packages?.map((pakage, index) => (
+                            pakage.type === "Train" ? (
+                                <View key={index} style={styles.cardInd}>
+                                    <View>
+                                        <Text style={styles.textType2}>Transport: {pakage.type}</Text>
+                                        <Text style={styles.textStock}>Stock: {pakage.stock}</Text>
+                                        <Text style={styles.textStock}>Start: {pakage.time.start_date}</Text>
+                                        <Text style={styles.textStock}>Finish: {pakage.time.finish_date}</Text>
+                                        <Text style={styles.textStock}>Price: ${pakage.price}</Text>
+                                    </View>
+                                    <TouchableOpacity style={styles.btnCont} onPress={() => handleCart(pakage)}>
+                                        <Image source={cart} style={styles.btnCart} />
+                                    </TouchableOpacity>
+                                </View>
+                            ) : null
+                        ))}
+                    </View>
+                    <View style={styles.cardType}>
+                        {packets.packages?.map((pakage, index) => (
+                            pakage.type === "Bus" ? (
+                                <View key={index} style={styles.cardInd}>
+                                    <View style={styles.textCard}>
+                                        <Text style={styles.textType2}>Transport: {pakage.type}</Text>
+                                        <Text style={styles.textStock}>Stock: {pakage.stock}</Text>
+                                        <Text style={styles.textStock}>Start: {pakage.time.start_date}</Text>
+                                        <Text style={styles.textStock}>Finish: {pakage.time.finish_date}</Text>
+                                        <Text style={styles.textStock}>Price: ${pakage.price}</Text>
+                                    </View>
+                                    <TouchableOpacity style={styles.btnCont} onPress={() => handleCart(pakage)}>
+                                        <Image source={cart} style={styles.btnCart} />
+                                    </TouchableOpacity>
+                                </View>
+                            ) : null
+                        ))}
+                    </View>
                 </View>
             </View>
         </ScrollView>
     )
 }
+
 
 const styles = StyleSheet.create({
     cont: {
@@ -49,8 +144,7 @@ const styles = StyleSheet.create({
         height: '100%',
     },
     cont2: {
-        marginTop: 30,
-        height: '100%',
+        marginTop: 30
     },
     img: {
         justifyContent: 'center',
@@ -101,6 +195,55 @@ const styles = StyleSheet.create({
         color: '#fff',
         margin: 10
     },
+    cardType: {
+        margin: 20,
+        display: 'flex',
+        alignSelf: 'center',
+        width: '85%',
+        height: 150,
+        backgroundColor: '#1B1D28',
+        color: '#fff',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+        borderWidth: 1,
+        borderRadius: 5
+    },
+    cardInd: {
+        padding: 10,
+        paddingRight: 30,
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    textCard: {
+        display: 'flex',
+        gap: 10
+    },
+    textType2: {
+        alignSelf: 'flex-start',
+        alignItems: 'flex-end',
+        color: '#fff'
+    },
+    textStock: {
+        color: '#fff'
+    },
+    btnCont: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: 50,
+        height: 50,
+        backgroundColor: '#D1F366',
+        borderRadius: 5000,
+    },
+    btnCart: {
+        width: 32,
+        height: 32,
+        fontWeight: 'bold'
+    }
 })
 
 export default Detail
