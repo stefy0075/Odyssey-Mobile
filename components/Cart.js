@@ -89,8 +89,8 @@ function Cart() {
                                 <View style={styles.contText}>
                                     <Text style={styles.title}>{packet.title}</Text>
                                     <Text style={styles.text}>{packet.type}</Text>
-                                    <Text style={styles.text}>{packet.quantity}</Text>
-                                    <Text style={styles.text}>${packet.price}</Text>
+                                    <Text style={styles.text}>Quantity: {packet.quantity}</Text>
+                                    <Text style={styles.text}>Price: ${packet.price}</Text>
                                 </View>
                             </View>
                         </View>
@@ -155,10 +155,11 @@ const styles = StyleSheet.create({
         color: '#FFFFFF',
     },
     removeButton: {
+
         fontSize: 16,
         color: '#D1F366',
         marginBottom: 10,
-        marginLeft: '80%',
+        marginLeft: '95%',
         fontWeight: 'bold',
     },
     clearButton: {
@@ -191,7 +192,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         marginLeft: 20,
-        width: '100%'
+        width: '100%',
+        height: 100
     },
 
     total: {
