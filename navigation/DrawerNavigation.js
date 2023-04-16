@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { createDrawerNavigator, DrawerItem } from "@react-navigation/drawer";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
+import { View, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import Header from "../components/Header";
 import Home from "../screens/Home";
 import SignIn from "../screens/SignIn";
@@ -11,39 +12,69 @@ import CartScreen from "../screens/CartScreen";
 import DestinatiosScreen from "../screens/Destinations";
 import Blog from "../screens/Blog";
 import DetailScreen from "../screens/Detail";
-
+import LogOutButton from "../components/Logout";
 
 const Drawer = createDrawerNavigator();
 
 export default function DrawerNavigation() {
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    async function checkToken() {
+      const token = await AsyncStorage.getItem("token");
+      console.log(token);
+      if (token) {
+        setIsAuthenticated(true);
+      } else {
+        setIsAuthenticated(false);
+      }
+    }
+    checkToken();
+  }, []);
 
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
   };
 
   return (
-
     <Drawer.Navigator
       initialRouteName="Home"
       screenOptions={screenOptions}
-      drawerContent={(props) => <CustomDrawerContent {...props} />}
+      drawerContent={(props) => (
+        <CustomDrawerContent {...props} isAuthenticated={isAuthenticated} />
+      )}
     >
-      <Drawer.Screen
-        name="Home"
-        component={Home}
-        options={{
-          headerTitle: () => <Header />,
-          headerTitleAlign: "center",
-        }}
-      />
-      <Drawer.Screen name="Destinations" component={DestinatiosScreen} />
-      <Drawer.Screen name="Detail" component={DetailScreen} />
-      <Drawer.Screen name="FAQ's" component={FAQs} />
-      <Drawer.Screen name="Sign In" component={SignIn} />
-      <Drawer.Screen name="Sign Up" component={SignUp} />
-      <Drawer.Screen name='Cart' component={CartScreen} />
-      <Drawer.Screen name='Blog' component={Blog} />
+      {isAuthenticated ? (
+        <>
+          <Drawer.Screen
+            name="Home"
+            component={Home}
+            options={{
+              headerTitle: () => <Header />,
+              headerTitleAlign: "center",
+            }}
+          />
+          <Drawer.Screen name="Destinations" component={DestinatiosScreen} />
+          <Drawer.Screen name="Detail" component={DetailScreen} />
+          <Drawer.Screen name="FAQ's" component={FAQs} />
+          <Drawer.Screen name="Cart" component={CartScreen} />
+          <Drawer.Screen name="Blog" component={Blog} />
+        </>
+      ) : (
+        <>
+          <Drawer.Screen
+            name="Home"
+            component={Home}
+            options={{
+              headerTitle: () => <Header />,
+              headerTitleAlign: "center",
+            }}
+          />
+          <Drawer.Screen name="Sign In" component={SignIn} />
+          <Drawer.Screen name="Sign Up" component={SignUp} />
+        </>
+      )}
     </Drawer.Navigator>
   );
 }
@@ -68,6 +99,13 @@ const screenOptions = {
 function CustomDrawerContent(props) {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const handleLogout = async () => {
+    await AsyncStorage.removeItem('token');
+    props.navigation.navigate('Home');
+  };
+
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
   };
@@ -80,68 +118,108 @@ function CustomDrawerContent(props) {
         </TouchableOpacity>
       </View>
       <View style={styles.menuContainer}>
-        <DrawerItem
-          label="Home"
-          onPress={() => props.navigation.navigate("Home")}
-          inactiveTintColor="#ffffff"
-          labelStyle={styles.drawerLabel}
-          icon={() => <Ionicons name="home" size={24} color="#D1F366" />}
-        />
-        <DrawerItem
-          label="Destinations"
-          onPress={() => props.navigation.navigate("Destinations")}
-          inactiveTintColor="#ffffff"
-          labelStyle={styles.drawerLabel}
-          icon={() => <Ionicons name="airplane" size={24} color="#D1F366" />}
-        />
-        <DrawerItem
-          label="Sign In"
-          onPress={() => props.navigation.navigate("Sign In")}
-          inactiveTintColor="#ffffff"
-          labelStyle={styles.drawerLabel}
-          icon={() => <Ionicons name="log-in" size={24} color="#D1F366" />}
-        />
-        <DrawerItem
-          label="Sign Up"
-          onPress={() => props.navigation.navigate("Sign Up")}
-          inactiveTintColor="#ffffff"
-          labelStyle={styles.drawerLabel}
-          icon={() => <Ionicons name="person-add" size={24} color="#D1F366" />}
-        />
-        <DrawerItem
-          label="Cart"
-          onPress={() => props.navigation.navigate("Cart")}
-          inactiveTintColor="#ffffff"
-          labelStyle={styles.drawerLabel}
-          icon={() => <Ionicons name="cart" size={24} color="#D1F366" />}
-        />
-        <DrawerItem
-          label="Blog"
-          onPress={() => props.navigation.navigate("Blog")}
-          inactiveTintColor="#ffffff"
-          labelStyle={styles.drawerLabel}
-          icon={() => <Ionicons name="book" size={24} color="#D1F366" />}
-        />
-        <DrawerItem
-          label="FAQ's"
-          onPress={() => props.navigation.navigate("FAQ's")}
-          inactiveTintColor="#ffffff"
-          labelStyle={styles.drawerLabel}
-          icon={() => <Ionicons name="help-circle" size={24} color="#D1F366" />}
-        />
-        <DrawerItem
-          label={`Mode ${!isDarkMode ? "Dark" : "Ligth"}`}
-          onPress={toggleDarkMode}
-          inactiveTintColor="#ffffff"
-          labelStyle={styles.drawerLabel}
-          icon={() => (
-            <Ionicons
-              name={isDarkMode ? "sunny" : "moon"}
-              size={24}
-              color="#D1F366"
+        {props.isAuthenticated ? (
+          <>
+            <DrawerItem
+              label="Home"
+              onPress={() => props.navigation.navigate("Home")}
+              inactiveTintColor="#ffffff"
+              labelStyle={styles.drawerLabel}
+              icon={() => <Ionicons name="home" size={24} color="#D1F366" />}
             />
-          )}
-        />
+            <DrawerItem
+              label="Destinations"
+              onPress={() => props.navigation.navigate("Destinations")}
+              inactiveTintColor="#ffffff"
+              labelStyle={styles.drawerLabel}
+              icon={() => (
+                <Ionicons name="airplane" size={24} color="#D1F366" />
+              )}
+            />
+            <DrawerItem
+              label="Cart"
+              onPress={() => props.navigation.navigate("Cart")}
+              inactiveTintColor="#ffffff"
+              labelStyle={styles.drawerLabel}
+              icon={() => <Ionicons name="cart" size={24} color="#D1F366" />}
+            />
+            <DrawerItem
+              label="Blog"
+              onPress={() => props.navigation.navigate("Blog")}
+              inactiveTintColor="#ffffff"
+              labelStyle={styles.drawerLabel}
+              icon={() => <Ionicons name="book" size={24} color="#D1F366" />}
+            />
+            <DrawerItem
+              label="FAQ's"
+              onPress={() => props.navigation.navigate("FAQ's")}
+              inactiveTintColor="#ffffff"
+              labelStyle={styles.drawerLabel}
+              icon={() => (
+                <Ionicons name="help-circle" size={24} color="#D1F366" />
+              )}
+            />
+            <DrawerItem
+              label={`Mode ${!isDarkMode ? "Dark" : "Ligth"}`}
+              onPress={toggleDarkMode}
+              inactiveTintColor="#ffffff"
+              labelStyle={styles.drawerLabel}
+              icon={() => (
+                <Ionicons
+                  name={isDarkMode ? "sunny" : "moon"}
+                  size={24}
+                  color="#D1F366"
+                />
+              )}
+            />
+            <DrawerItem
+              label="Logout"
+              onPress={ handleLogout }
+              inactiveTintColor="#ffffff"
+              labelStyle={styles.drawerLabel}
+              icon={() => <Ionicons name="log-out" size={24} color="#D1F366" />}
+            />
+          </>
+        ) : (
+          <>
+            <DrawerItem
+              label="Home"
+              onPress={() => props.navigation.navigate("Home")}
+              inactiveTintColor="#ffffff"
+              labelStyle={styles.drawerLabel}
+              icon={() => <Ionicons name="home" size={24} color="#D1F366" />}
+            />
+            <DrawerItem
+              label="Sign In"
+              onPress={() => props.navigation.navigate("Sign In")}
+              inactiveTintColor="#ffffff"
+              labelStyle={styles.drawerLabel}
+              icon={() => <Ionicons name="log-in" size={24} color="#D1F366" />}
+            />
+            <DrawerItem
+              label="Sign Up"
+              onPress={() => props.navigation.navigate("Sign Up")}
+              inactiveTintColor="#ffffff"
+              labelStyle={styles.drawerLabel}
+              icon={() => (
+                <Ionicons name="person-add" size={24} color="#D1F366" />
+              )}
+            />
+            <DrawerItem
+              label={`Mode ${!isDarkMode ? "Dark" : "Ligth"}`}
+              onPress={toggleDarkMode}
+              inactiveTintColor="#ffffff"
+              labelStyle={styles.drawerLabel}
+              icon={() => (
+                <Ionicons
+                  name={isDarkMode ? "sunny" : "moon"}
+                  size={24}
+                  color="#D1F366"
+                />
+              )}
+            />
+          </>
+        )}
       </View>
     </View>
   );

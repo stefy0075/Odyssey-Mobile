@@ -10,7 +10,7 @@ const { read_all } = PacketsActions;
 function Destinations() {
     const dispatch = useDispatch();
     const [reload, setReload] = useState(false);
-    const [searchTerm, setSearchTerm] = useState(''); // Estado para almacenar la cadena de búsqueda
+    const [searchTerm, setSearchTerm] = useState('');
 
     const packets = useSelector((store) => store.packets.packets);
 
@@ -20,7 +20,6 @@ function Destinations() {
         }, [dispatch, reload])
     );
 
-    // Función para filtrar los paquetes según la cadena de búsqueda
     const filteredPackets = packets.filter(packet => packet.title.toLowerCase().includes(searchTerm.toLowerCase()));
 
     return (

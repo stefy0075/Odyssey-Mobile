@@ -102,8 +102,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: 10,
-        // marginTop: 10,
-        // marginBottom: 10,
     },
     dateSF: {
         marginTop: 20,
