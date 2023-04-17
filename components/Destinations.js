@@ -36,7 +36,7 @@ function Destinations() {
                 {filteredPackets.length ? (
                     filteredPackets.map((packet) => <PacketCard key={packet._id} title_={packet.title} category_={packet.category_id} photo={packet.cover_photo} _id={packet._id} packages={packet.packages} />)
                 ) : (
-                    <Text style={{ textAlign: 'center', marginTop: 20, color: '#fff' }}>Not Found</Text>
+                    <Text style={{ textAlign: 'center', marginTop: 20, color: '#fff', height: 800 }}>Not Found</Text>
                 )}
             </View>
         </ScrollView>
@@ -56,7 +56,8 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         paddingHorizontal: 10,
-        marginBottom: 20,
+        marginTop: 10,
+        marginBottom: 5,
         width: '85%',
     },
     filter: {
@@ -65,7 +66,7 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         justifyContent: "center",
         width: '100%',
-        margin: 8
+        margin: 8,
     }
 
 

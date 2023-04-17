@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { createDrawerNavigator, DrawerItem } from "@react-navigation/drawer";
 import { View, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
@@ -13,29 +13,40 @@ import DestinatiosScreen from "../screens/Destinations";
 import Blog from "../screens/Blog";
 import DetailScreen from "../screens/Detail";
 import LogOutButton from "../components/Logout";
+import { useFocusEffect } from "@react-navigation/native";
+import { useNavigation } from '@react-navigation/native';
+import { useSelector, useDispatch } from "react-redux";
+import action from '../store/ReloadState/Actions'
+
+const {captureState} = action
 
 const Drawer = createDrawerNavigator();
 
 export default function DrawerNavigation() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const dispatch = useDispatch()
+  const reloadState = useSelector(store => store.reloadReducer.reloadState)
+  console.log(reloadState)
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [reload, setReload] = useState(false)
+  const [token, setToken] = useState('')
 
-  useEffect(() => {
-    async function checkToken() {
-      const token = await AsyncStorage.getItem("token");
-      console.log(token);
+  useFocusEffect(
+    useCallback(() => {
+      async function checkToken() {
+        const token = await AsyncStorage.getItem("token");
+        console.log(token);
+        setToken(token)
+      }    
+      checkToken();
+    }, [reloadState])
+  );
+    useEffect(()=>{
       if (token) {
         setIsAuthenticated(true);
       } else {
         setIsAuthenticated(false);
       }
-    }
-    checkToken();
-  }, []);
-
-  const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode);
-  };
+    },[token])
 
   return (
     <Drawer.Navigator
@@ -97,17 +108,17 @@ const screenOptions = {
 };
 
 function CustomDrawerContent(props) {
-  const [isDarkMode, setIsDarkMode] = useState(false);
-
+  const dispatch = useDispatch()
+  const reloadState = useSelector(store => store.reloadReducer.reloadState)
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const navigation = useNavigation();
 
   const handleLogout = async () => {
     await AsyncStorage.removeItem('token');
-    props.navigation.navigate('Home');
-  };
-
-  const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode);
+    setTimeout(() => {
+      dispatch(captureState({'reloadState': !reloadState }))
+      navigation.navigate('Home');
+    }, 1000);
   };
 
   return (
@@ -160,19 +171,6 @@ function CustomDrawerContent(props) {
               )}
             />
             <DrawerItem
-              label={`Mode ${!isDarkMode ? "Dark" : "Ligth"}`}
-              onPress={toggleDarkMode}
-              inactiveTintColor="#ffffff"
-              labelStyle={styles.drawerLabel}
-              icon={() => (
-                <Ionicons
-                  name={isDarkMode ? "sunny" : "moon"}
-                  size={24}
-                  color="#D1F366"
-                />
-              )}
-            />
-            <DrawerItem
               label="Logout"
               onPress={ handleLogout }
               inactiveTintColor="#ffffff"
@@ -203,19 +201,6 @@ function CustomDrawerContent(props) {
               labelStyle={styles.drawerLabel}
               icon={() => (
                 <Ionicons name="person-add" size={24} color="#D1F366" />
-              )}
-            />
-            <DrawerItem
-              label={`Mode ${!isDarkMode ? "Dark" : "Ligth"}`}
-              onPress={toggleDarkMode}
-              inactiveTintColor="#ffffff"
-              labelStyle={styles.drawerLabel}
-              icon={() => (
-                <Ionicons
-                  name={isDarkMode ? "sunny" : "moon"}
-                  size={24}
-                  color="#D1F366"
-                />
               )}
             />
           </>

@@ -1,13 +1,19 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, Alert, ToastAndroid } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useDispatch, useSelector } from "react-redux";
 import Button from "./Button";
 import styles from "../styles/SignIn.style";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from '@react-navigation/native';
+import action from '../store/ReloadState/Actions'
+
+const {captureState} = action
 
 const Form = ({ onSignIn }) => {
+  const dispatch = useDispatch()
+  const state = useSelector(store => store.reloadReducer.reloadState)
   const navigation = useNavigation();
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
@@ -27,16 +33,16 @@ const Form = ({ onSignIn }) => {
       console.log("funcionó");
 
       const token = res.data.token;
-      console.log(token);
       await AsyncStorage.setItem("token", token);
-      Alert.alert("¡Usuario Online!", "Bienvenido", [
-        { text: "OK", onPress: () => console.log("OK Pressed") },
-      ]);
+      ToastAndroid.show('¡Usuario Online!', ToastAndroid.SHORT)
+
       setTimeout(() => {
+        dispatch(captureState({'reloadState': !state }))
         navigation.navigate('Home');
       }, 1000);
       setMail('')
       setPassword('')
+
     } catch (error) {
       let err = error;
       console.log("Ocurrió un error: " + err);

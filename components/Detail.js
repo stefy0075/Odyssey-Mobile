@@ -1,10 +1,11 @@
 import React from 'react'
-import { ScrollView, View, Text, Image, StyleSheet, TouchableOpacity, Alert } from 'react-native'
+import { ScrollView, View, Text, Image, StyleSheet, TouchableOpacity, Alert, ToastAndroid } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import onePacket from '../store/OnePacket/Actions'
 import cart from '../assets/cart.png'
+
 
 const { read_One } = onePacket
 
@@ -25,10 +26,8 @@ function Detail(props) {
     }, [id]);
 
     async function handleCart(pakage, id) {
-        Alert.alert("¡Se agregó el paquete al carrito!", '',[
-            { text: "OK", onPress: () => console.log("OK Pressed") },
-        ]);
-        console.log('el id ',id)
+        ToastAndroid.show('¡Se agregó el paquete al carrito!', ToastAndroid.SHORT)
+
         const stock = pakage.stock;
         if (pakage.price === 'Not Available' || stock === 'Not Available' || stock === 0) {
             // El paquete no se puede agregar al carrito
