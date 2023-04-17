@@ -11,14 +11,12 @@ const { read_One } = onePacket
 function Detail(props) {
     const dispatch = useDispatch()
     const id = props._id
-    console.log(id)
     const [packets, setPackets] = useState([])
     let target = []
 
     useEffect(() => {
         dispatch(read_One(id))
             .then((response) => {
-                console.log(response.payload.packets)
                 setPackets(response.payload.packets);
             })
             .catch((error) => {
@@ -26,7 +24,8 @@ function Detail(props) {
             });
     }, [id]);
 
-    async function handleCart(pakage) {
+    async function handleCart(pakage, id) {
+        console.log('el id ',id)
         const stock = pakage.stock;
         if (pakage.price === 'Not Available' || stock === 'Not Available' || stock === 0) {
             // El paquete no se puede agregar al carrito
@@ -49,14 +48,16 @@ function Detail(props) {
             } else {
                 // Si el paquete no existe en el carrito, crea una nueva entrada
                 paquete.push({
+                    id,
                     ...pakage,
                     title: packets.title,
                     cover_photo: packets.cover_photo,
                     quantity: 1,
                 });
             }
-
+            
             await AsyncStorage.setItem('paquete', JSON.stringify(paquete));
+            console.log('paquete',paquete)
             console.log('Paquete guardado en AsyncStorage');
         } catch (error) {
             console.log('Error al guardar el paquete: ', error);
@@ -87,8 +88,7 @@ function Detail(props) {
                                         <Text style={styles.textStock}>Finish: {pakage.time[0].finish_date}</Text>
                                         <Text style={styles.textStock}>Price: ${pakage.price}</Text>
                                     </View>
-                                    <TouchableOpacity style={styles.btnCont} onPress={() => handleCart(pakage)}
-                                    >
+                                    <TouchableOpacity style={styles.btnCont} onPress={() => handleCart(pakage, packets._id)}>
                                         <Image source={cart} style={styles.btnCart} />
                                     </TouchableOpacity>
                                 </View>
@@ -106,7 +106,7 @@ function Detail(props) {
                                         <Text style={styles.textStock}>Finish: {pakage.time.finish_date}</Text>
                                         <Text style={styles.textStock}>Price: ${pakage.price}</Text>
                                     </View>
-                                    <TouchableOpacity style={styles.btnCont} onPress={() => handleCart(pakage)}>
+                                    <TouchableOpacity style={styles.btnCont} onPress={() => handleCart(pakage, packets._id)}>
                                         <Image source={cart} style={styles.btnCart} />
                                     </TouchableOpacity>
                                 </View>
@@ -124,7 +124,7 @@ function Detail(props) {
                                         <Text style={styles.textStock}>Finish: {pakage.time.finish_date}</Text>
                                         <Text style={styles.textStock}>Price: ${pakage.price}</Text>
                                     </View>
-                                    <TouchableOpacity style={styles.btnCont} onPress={() => handleCart(pakage)}>
+                                    <TouchableOpacity style={styles.btnCont} onPress={() => handleCart(pakage, packets._id)}>
                                         <Image source={cart} style={styles.btnCart} />
                                     </TouchableOpacity>
                                 </View>

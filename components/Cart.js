@@ -1,27 +1,26 @@
 import React, { useCallback, useState } from 'react';
-import { View, Text, TouchableOpacity, ScrollView, StyleSheet, Image } from 'react-native';
-
+import { View, Text, TouchableOpacity, ScrollView, StyleSheet, Image, Linking } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { useFocusEffect } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage'; // Importar AsyncStorage
-import PacketsActions from '../store/Packets/actions';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import basurero from '../assets/basurero.png'
-import dollar from '../assets/dolar.png'
+import basurero from '../assets/basurero.png';
+import dollar from '../assets/dolar.png';
+import PacketsActions from '../store/Packets/actions'
 
 const { read_all } = PacketsActions;
 
 function Cart() {
     const dispatch = useDispatch();
     const [reload, setReload] = useState(false);
-    const [storedPackets, setStoredPackets] = useState([]); // Variable local para almacenar los datos del AsyncStorage
+    const [storedPackets, setStoredPackets] = useState([]);
 
     useFocusEffect(
         useCallback(() => {
             dispatch(read_all());
 
-            // Obtener los datos del AsyncStorage y almacenarlos en la variable local
-            AsyncStorage.getItem('paquete').then((data) => {
+            AsyncStorage.getItem('paquete')
+            .then((data) => {
                 if (data) {
                     const packets = JSON.parse(data);
                     if (Array.isArray(packets)) {
@@ -35,50 +34,54 @@ function Cart() {
     );
 
     const handleRemovePacket = (packetId) => {
-        // Buscar el índice del paquete que desea eliminar
         const packetIndex = storedPackets.findIndex((p) => p.id === packetId);
 
         if (packetIndex !== -1) {
-            // Eliminar el paquete del array usando el índice encontrado
             const newStoredPackets = [...storedPackets];
             newStoredPackets.splice(packetIndex, 1);
             setStoredPackets(newStoredPackets);
 
-            // Guardar la nueva lista en el AsyncStorage
             AsyncStorage.setItem('paquete', JSON.stringify(newStoredPackets));
         }
     };
 
-
     const handleClearCart = () => {
-        // Vaciar la lista local
         setStoredPackets([]);
-
-        // Vaciar el AsyncStorage
         AsyncStorage.removeItem('paquete');
     };
 
     const totalPrice = storedPackets.reduce((acc, packet) => acc + packet.price * packet.quantity, 0);
-    const handleBuy = () => {
-        // Hacer la petición HTTP al servidor para realizar la compra
-        const headers = { 'Content-Type': 'application/json' };
-        const cartItems = storedPackets.map(({ id, quantity }) => ({ id, quantity }));
-        axios.post("https://odyssey-back.onrender.com/buy", cartItems, headers)
-            .then(res => {
-                // Redireccionar a la página de pago
-                window.location.href = res.data.response.body.init_point;
-                // Eliminar el carrito en localStorage
+
+    const handleBuy = async () => {
+        const token = await AsyncStorage.getItem('token')
+        const headers = { headers: { 'Authorization': `Bearer ${token}`}};
+    
+        axios.post('https://odyssey-back.onrender.com/buy', storedPackets, headers)
+            .then((res) => {
+                const { init_point } = res.data.response.body;
+                Linking.canOpenURL(init_point).then((supported) => {
+                    if (supported) {
+                        Linking.openURL(init_point);
+                    } else {
+                        // Si no se puede abrir la app de Mercado Pago, se redirige a la página web
+                        Linking.openURL(`https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=${init_point}`);
+                    }
+                });
                 AsyncStorage.removeItem('paquete');
+                setStoredPackets([]); // Actualizar el estado para mostrar el carrito vacío
+                console.log('compra realizada');
             })
-            .catch(err => console.error(err));
+            .catch((err) => console.error('aca esta el error', err));
     };
+    
+    
 
     return (
         <ScrollView style={styles.cont}>
             <View>
                 {storedPackets.map((packet) => (
-                    <View>
-                        <View style={styles.contPaquete} key={packet.id}>
+                    <View key={packet.id}>
+                        <View style={styles.contPaquete} >
                             <TouchableOpacity onPress={() => handleRemovePacket(packet.id)}>
                                 <Text style={styles.removeButton}>X</Text>
                             </TouchableOpacity>
