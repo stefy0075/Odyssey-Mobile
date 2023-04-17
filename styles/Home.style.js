@@ -11,12 +11,6 @@ const section = {
   backgroundColor: "#141627",
 };
 
-const anchor = {
-  color: "#fff",
-  fontSize: 18,
-  marginVertical: 20,
-};
-
 const container = {
   flex: 1,
   justifyContent: "center",
@@ -42,33 +36,6 @@ const text = {
   marginBottom: 20,
 };
 
-const line = {
-  flex: 1,
-  justifyContent: "center",
-  alignItems: "center",
-  width: "100%",
-  height: 40,
-};
-
-const line2 = {
-  flex: 1,
-  width: "100%",
-  height: 10,
-};
-
-const line3 = {
-  flex: 1,
-  width: "100%",
-  height: 40,
-};
-
-const gradient = {
-  position: "relative",
-  top: 0,
-  left: 0,
-  bottom: 0,
-  right: 0,
-};
 
 const image = {
   height: 200,
@@ -78,6 +45,7 @@ const image = {
   marginBottom: 40,
   marginLeft:10,
   marginRight: 10,
+  marginTop: 40
 };
 
 const titleSection3 = {
@@ -109,12 +77,7 @@ export default {
   text,
   scrollView,
   section,
-  anchor,
   image,
-  line,
-  gradient,
-  line2,
-  line3,
   titleSection3,
   textSection3,
   section3,

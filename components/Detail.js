@@ -1,6 +1,6 @@
 import React from 'react'
-import { ScrollView, View, Text, Image, StyleSheet, TouchableOpacity, Alert, ToastAndroid } from 'react-native'
-import { useDispatch, useSelector } from 'react-redux'
+import { ScrollView, View, Text, Image, StyleSheet, TouchableOpacity, ToastAndroid } from 'react-native'
+import { useDispatch } from 'react-redux'
 import { useEffect, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import onePacket from '../store/OnePacket/Actions'

@@ -13,15 +13,11 @@ const handleToken = () => {
   };
 };
 
-const API_URL = 'https://odyssey-back.onrender.com/users'
+const API_URL = "https://odyssey-back.onrender.com/users";
 
 const add_user = createAsyncThunk("add_user", async (user) => {
   try {
-    const response = await axios.post(
-      `${API_URL}/signup`,
-      user,
-      handleToken()
-    );
+    const response = await axios.post(`${API_URL}/signup`, user, handleToken());
     return {
       response: { user: response.data },
       message: "User successfully created",
@@ -36,11 +32,7 @@ const add_user = createAsyncThunk("add_user", async (user) => {
 
 const sign_in = createAsyncThunk("sign_in", async (user) => {
   try {
-    let response = await axios.post(
-      `${API_URL}/signin`,
-      user,
-      handleToken()
-    );
+    let response = await axios.post(`${API_URL}/signin`, user, handleToken());
     return {
       response: { user: response.data },
       message: "User authenticated",

@@ -1,19 +1,26 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, Alert, ToastAndroid } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Alert,
+  ToastAndroid,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "./Button";
 import styles from "../styles/SignIn.style";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useNavigation } from '@react-navigation/native';
-import action from '../store/ReloadState/Actions'
+import { useNavigation } from "@react-navigation/native";
+import action from "../store/ReloadState/Actions";
 
-const {captureState} = action
+const { captureState } = action;
 
 const Form = ({ onSignIn }) => {
-  const dispatch = useDispatch()
-  const state = useSelector(store => store.reloadReducer.reloadState)
+  const dispatch = useDispatch();
+  const state = useSelector((store) => store.reloadReducer.reloadState);
   const navigation = useNavigation();
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
@@ -34,23 +41,20 @@ const Form = ({ onSignIn }) => {
 
       const token = res.data.token;
       await AsyncStorage.setItem("token", token);
-      ToastAndroid.show('¡Usuario Online!', ToastAndroid.SHORT)
+      ToastAndroid.show("¡Usuario Online!", ToastAndroid.SHORT);
 
       setTimeout(() => {
-        dispatch(captureState({'reloadState': !state }))
-        navigation.navigate('Home');
+        dispatch(captureState({ reloadState: !state }));
+        navigation.navigate("Home");
       }, 1000);
-      setMail('')
-      setPassword('')
-
+      setMail("");
+      setPassword("");
     } catch (error) {
       let err = error;
       console.log("Ocurrió un error: " + err);
-      Alert.alert(
-        "Ooops, something went wrong!",
-        "Credenciales incorrectas",
-        [{ text: "OK", onPress: () => console.log("OK Pressed") }]
-      );
+      Alert.alert("Ooops, something went wrong!", "Credenciales incorrectas", [
+        { text: "OK", onPress: () => console.log("OK Pressed") },
+      ]);
     }
   };
 
@@ -58,11 +62,7 @@ const Form = ({ onSignIn }) => {
     <View style={styles.center}>
       <View style={styles.containerForm}>
         <Text style={styles.label}>Email</Text>
-        <TextInput
-          style={styles.input}
-          value={mail}
-          onChangeText={setMail}
-        />
+        <TextInput style={styles.input} value={mail} onChangeText={setMail} />
         <Text style={styles.label}>Password</Text>
         <View style={styles.inputContainer}>
           <TextInput

@@ -3,7 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Button from "./Button";
 import styles from "../styles/SignUp.style";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 
 const RegisterForm = ({ onSignIn }) => {
@@ -21,34 +21,34 @@ const RegisterForm = ({ onSignIn }) => {
       mail: mail,
       password: password,
       name: name,
-      photo: photo
-    }
-    console.log(data)
-    
-    let url = 'https://odyssey-back.onrender.com/users/signup'
-  
+      photo: photo,
+    };
+    console.log(data);
+
+    let url = "https://odyssey-back.onrender.com/users/signup";
+
     try {
       await axios.post(url, data).then((res) => {
-          console.log('funcionó');
-          Alert.alert('¡Usuario creado con éxito!', 'Bienvenido', [
-              { text: 'OK', onPress: () => console.log('OK Pressed') },
-          ]);
-          setTimeout(() => {
-            navigation.navigate('Home')
-          }, 1000);
+        console.log("funcionó");
+        Alert.alert("¡Usuario creado con éxito!", "Bienvenido", [
+          { text: "OK", onPress: () => console.log("OK Pressed") },
+        ]);
+        setTimeout(() => {
+          navigation.navigate("Home");
+        }, 1000);
       });
-  } catch (error) {
+    } catch (error) {
       let err = error;
-      console.log('Ocurrió un error: ' + err);
-      Alert.alert('Ooops, something went wrong!', 'Credenciales incorrectas', [
-          { text: 'OK', onPress: () => console.log('OK Pressed') },
+      console.log("Ocurrió un error: " + err);
+      Alert.alert("Ooops, something went wrong!", "Credenciales incorrectas", [
+        { text: "OK", onPress: () => console.log("OK Pressed") },
       ]);
-  }
-  setName('')
-  setMail('')
-  setPhoto('')
-  setPassword('')
-}
+    }
+    setName("");
+    setMail("");
+    setPhoto("");
+    setPassword("");
+  };
 
   return (
     <View style={styles.center}>
