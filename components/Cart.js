@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { View, Text, TouchableOpacity, ScrollView, StyleSheet, Image, Linking } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, StyleSheet, Image, Linking, Alert } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -20,16 +20,16 @@ function Cart() {
             dispatch(read_all());
 
             AsyncStorage.getItem('paquete')
-            .then((data) => {
-                if (data) {
-                    const packets = JSON.parse(data);
-                    if (Array.isArray(packets)) {
-                        setStoredPackets(packets);
-                    } else {
-                        setStoredPackets([packets]);
+                .then((data) => {
+                    if (data) {
+                        const packets = JSON.parse(data);
+                        if (Array.isArray(packets)) {
+                            setStoredPackets(packets);
+                        } else {
+                            setStoredPackets([packets]);
+                        }
                     }
-                }
-            });
+                });
         }, [dispatch, reload])
     );
 
@@ -54,8 +54,8 @@ function Cart() {
 
     const handleBuy = async () => {
         const token = await AsyncStorage.getItem('token')
-        const headers = { headers: { 'Authorization': `Bearer ${token}`}};
-    
+        const headers = { headers: { 'Authorization': `Bearer ${token}` } };
+
         axios.post('https://odyssey-back.onrender.com/buy', storedPackets, headers)
             .then((res) => {
                 const { init_point } = res.data.response.body;
@@ -68,13 +68,17 @@ function Cart() {
                     }
                 });
                 AsyncStorage.removeItem('paquete');
-                setStoredPackets([]); // Actualizar el estado para mostrar el carrito vacío
-                console.log('compra realizada');
+                setTimeout(() => {
+                    setStoredPackets([]); // Actualizar el estado para mostrar el carrito vacío
+                    Alert.alert("¡Compra realizada con éxito!", '',[
+                        { text: "OK", onPress: () => console.log("OK Pressed") },
+                    ]);
+                }, 5000);
             })
             .catch((err) => console.error('aca esta el error', err));
     };
-    
-    
+
+
 
     return (
         <ScrollView style={styles.cont}>
