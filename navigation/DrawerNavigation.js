@@ -23,9 +23,11 @@ const { captureState } = action;
 const Drawer = createDrawerNavigator();
 
 export default function DrawerNavigation() {
-  const [backgroundColor, setBackgroundColor] = useState("#aac4ff");
-
+  const reloadState = useSelector((store) => store.reloadReducer.reloadState);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [token, setToken] = useState("");
   const [isDarkMode, setIsDarkMode] = useState(false);
+
   const lightStyles = {
     headerStyle: {
       backgroundColor: "#aac4ff",
@@ -72,10 +74,6 @@ export default function DrawerNavigation() {
     },
   };
 
-  const reloadState = useSelector((store) => store.reloadReducer.reloadState);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [token, setToken] = useState("");
-
   useFocusEffect(
     useCallback(() => {
       async function checkToken() {
@@ -93,12 +91,21 @@ export default function DrawerNavigation() {
       setIsAuthenticated(false);
     }
   }, [token]);
+  
+  const saveMode = async (mode) => {
+    try {
+      await AsyncStorage.setItem('@mode', mode);
+      // console.log(mode)
+    } catch (error) {
+      console.log('Error saving data:', error);
+    }
+  };
 
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
-    setBackgroundColor(isDarkMode ? "#aac4ff" : "#141627");
-  };
-
+    saveMode(isDarkMode ? 'light' : 'dark' );
+  };  
+  
   return (
     <Drawer.Navigator
       initialRouteName="Home"
@@ -127,32 +134,26 @@ export default function DrawerNavigation() {
                 isDarkMode ? <HeaderBlack /> : <HeaderLigth />,
               headerTitleAlign: "center",
             }}
-            backgroundColor={backgroundColor}
           />
           <Drawer.Screen
             name="Destinations"
             component={DestinatiosScreen}
-            backgroundColor={backgroundColor}
           />
           <Drawer.Screen
             name="Detail"
             component={DetailScreen}
-            backgroundColor={backgroundColor}
           />
           <Drawer.Screen
             name="FAQ's"
             component={FAQs}
-            backgroundColor={backgroundColor}
           />
           <Drawer.Screen
             name="Cart"
             component={CartScreen}
-            backgroundColor={backgroundColor}
           />
           <Drawer.Screen
             name="Blog"
             component={Blog}
-            backgroundColor={backgroundColor}
           />
         </>
       ) : (
@@ -165,17 +166,14 @@ export default function DrawerNavigation() {
                 isDarkMode ? <HeaderBlack /> : <HeaderLigth />,
               headerTitleAlign: "center",
             }}
-            backgroundColor={backgroundColor}
           />
           <Drawer.Screen
             name="Sign In"
             component={SignIn}
-            backgroundColor={backgroundColor}
           />
           <Drawer.Screen
             name="Sign Up"
             component={SignUp}
-            backgroundColor={backgroundColor}
           />
         </>
       )}

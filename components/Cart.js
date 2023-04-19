@@ -24,6 +24,20 @@ function Cart() {
   const [reload, setReload] = useState(false);
   const [storedPackets, setStoredPackets] = useState([]);
 
+  const getMode = async () => {
+      const mode = await AsyncStorage.getItem('@mode');
+      console.log(mode)
+  };
+
+  const toggleDarkMode = () => {
+    getMode().then(mode => {
+      setIsDarkMode(mode === 'dark');
+      console.log('dark')
+    }).catch(error => {
+      console.log('Error al obtener el modo:', error);
+    });
+  };
+
   useFocusEffect(
     useCallback(() => {
       dispatch(read_all());
@@ -75,7 +89,6 @@ function Cart() {
           if (supported) {
             Linking.openURL(init_point);
           } else {
-            // Si no se puede abrir la app de Mercado Pago, se redirige a la página web
             Linking.openURL(
               `https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=${init_point}`
             );
@@ -83,7 +96,7 @@ function Cart() {
         });
         AsyncStorage.removeItem("paquete");
         setTimeout(() => {
-          setStoredPackets([]); // Actualizar el estado para mostrar el carrito vacío
+          setStoredPackets([]);
           Alert.alert("¡Compra realizada con éxito!", "", [
             { text: "OK", onPress: () => console.log("OK Pressed") },
           ]);
