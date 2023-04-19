@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "MingaMobile",
-    "slug": "MingaMobile",
+    "name": "Odyssey",
+    "slug": "Odyssey",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -18,16 +18,23 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.aguspereyra.Odyssey"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.aguspereyra.Odyssey"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "7502a23d-a90f-418b-9468-10786b0c2fd3"
+      }
     }
   }
 }
